@@ -11,8 +11,8 @@ const Project = () => {
   const router = useRouter();
 
   const [open, setOpen] = useState(true);
+  const cancelButtonRef = useRef(null);
   if (!isLogged) {
-    const cancelButtonRef = useRef(null);
     setTimeout(() => {
       router.push("/signin");
     }, 2500);
