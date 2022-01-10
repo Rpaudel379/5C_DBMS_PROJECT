@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition, Popover } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
-
+import { useGlobalContext } from "../context/userContext";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -11,15 +11,29 @@ const navigation = [
 ];
 
 const Navbar = () => {
+  const { userData } = useGlobalContext();
   const router = useRouter();
 
   navigation.map((nav) =>
     router.pathname == nav.href ? (nav.current = true) : (nav.current = false)
   );
 
+  const handleSignout = async () => {
+    try {
+      const tokenRes = await fetch("api/userdata", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: null,
+      });
+      router.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Popover>
-      <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
+      <div className="relative pt-6 px-4 sm:px-0">
         <nav
           className="relative flex items-center justify-between sm:h-10 lg:justify-start"
           aria-label="Global"
@@ -62,11 +76,20 @@ const Navbar = () => {
             {/*//? LOGIN or SIGNUP */}
             {/*//? LOGIN or SIGNUP */}
 
-            <Link href={"/signin"}>
-              <a className="font-medium text-indigo-600 hover:text-indigo-500">
-                Sign in
-              </a>
-            </Link>
+            {userData ? (
+              <button
+                onClick={handleSignout}
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Signout
+              </button>
+            ) : (
+              <Link href={"/signin"}>
+                <a className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Sign in
+                </a>
+              </Link>
+            )}
 
             {/*//? LOGIN or SIGNUP */}
             {/*//? LOGIN or SIGNUP */}
@@ -92,11 +115,13 @@ const Navbar = () => {
           <div className="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden">
             <div className="px-5 pt-4 flex items-center justify-between">
               <div>
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                  alt=""
-                />
+                <Link href={"/"}>
+                  <img
+                    className="h-8 w-auto"
+                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                    alt=""
+                  />
+                </Link>
               </div>
               <div className="-mr-2">
                 <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -119,11 +144,21 @@ const Navbar = () => {
                 </Link>
               ))}
             </div>
-            <Link href="/signin">
-              <a className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100">
-                Sign in
-              </a>
-            </Link>
+
+            {userData ? (
+              <Link href="/signin">
+                <a className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100">
+                  Sign in
+                </a>
+              </Link>
+            ) : (
+              <button
+                className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100"
+                onClick={handleSignout}
+              >
+                Signout
+              </button>
+            )}
           </div>
         </Popover.Panel>
       </Transition>
