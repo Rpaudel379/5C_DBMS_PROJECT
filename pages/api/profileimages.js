@@ -10,6 +10,8 @@ export const config = {
   },
 };
 
+// get all profile images in Home page
+
 export default async (req, res) => {
   if (req.method == "GET") {
     const profileImg = await prisma.profileImg.findMany();

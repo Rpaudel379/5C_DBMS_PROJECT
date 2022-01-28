@@ -8,7 +8,7 @@ const SignIn = () => {
   const router = useRouter();
 
   const [credentials, setCredentials] = useState({
-    email: "",
+    email: "", 
     password: "",
   });
 
@@ -34,7 +34,6 @@ const SignIn = () => {
       const data = await response.json();
 
       if (response.status == 200) {
-        console.log(data);
         //! implement cookies
         //! implement cookies
         //! implement cookies

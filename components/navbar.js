@@ -146,18 +146,18 @@ const Navbar = () => {
             </div>
 
             {userData ? (
-              <Link href="/signin">
-                <a className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100">
-                  Sign in
-                </a>
-              </Link>
-            ) : (
               <button
                 className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100"
                 onClick={handleSignout}
               >
                 Signout
               </button>
+            ) : (
+              <Link href="/signin">
+                <a className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100">
+                  Sign in
+                </a>
+              </Link>
             )}
           </div>
         </Popover.Panel>

@@ -11,27 +11,30 @@ export const config = {
 };
 
 export default async (req, res) => {
+  // get specific profile image for dashboard
+
   if (req.method == "GET") {
-    console.log(req.path);
     const token = JSON.parse(req.cookies.token);
 
     const profileImg = await prisma.profileImg.findUnique({
       where: {
-        email: token,
+        userid: token,
       },
     });
 
     res.status(200).json(profileImg);
   }
 
+  // update profile image of specific user
   if (req.method == "POST") {
-    const { email, image } = req.body;
+    const { userid, image } = req.body;
 
     try {
       await prisma.profileImg.updateMany({
         where: {
-          email: email,
+          userid,
         },
+        
         data: {
           image,
         },

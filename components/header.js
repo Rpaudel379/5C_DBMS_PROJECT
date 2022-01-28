@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const Header = () => {
-  return (
+  return ( 
     <div>
       <div className="relative bg-transparent ">
         {/* <div className="max--7xl mx-auto"> */}

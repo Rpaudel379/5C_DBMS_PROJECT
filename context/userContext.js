@@ -9,6 +9,7 @@ const AppProvider = ({ children }) => {
   const [allUsers, setAllUsers] = useState();
   const [allImages, setAllImages] = useState();
 
+
   useEffect(() => {
     const checkCookie = async () => {
       setLoading(true);
@@ -65,7 +66,7 @@ const AppProvider = ({ children }) => {
     img();
   }, []);
 
-  // select all users
+  // select all users //? to display on home page
   useEffect(async () => {
     const users = await fetch("api/userdata", {
       method: "GET",

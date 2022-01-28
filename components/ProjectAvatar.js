@@ -34,14 +34,13 @@ const ProjectAvatar = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: userData.email,
+          userid: userData.id,
           image: img64,
         }),
       });
 
       const data = await response.json();
       if (response.status == 200) {
-        console.log(data);
         router.reload();
       } else {
         setError(data.message);

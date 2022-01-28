@@ -19,6 +19,7 @@ import { useGlobalContext } from "../context/userContext";
 
 export default function ProjectHome() {
   const { allUsers, allImages } = useGlobalContext();
+  console.log(allUsers);
 
   const people = [
     {
@@ -65,6 +66,12 @@ export default function ProjectHome() {
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
+                        bio
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
                         Country
                       </th>
                       <th
@@ -103,12 +110,14 @@ export default function ProjectHome() {
                             </div>
                           </div>
                         </td>
+
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {user?.bio}
+                        </td>
+
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {user?.country}
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            {user?.department}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">

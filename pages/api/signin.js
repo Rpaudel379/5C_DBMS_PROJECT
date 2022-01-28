@@ -32,14 +32,14 @@ export default async function signin(req, res) {
         if (checkPassword) {
           res.setHeader(
             "Set-Cookie",
-            cookie.serialize("token", JSON.stringify(findUser.email), {
+            cookie.serialize("token", JSON.stringify(findUser.id), {
               httpOnly: true,
               maxAge: 86400,
               secure: true,
               path: "/",
             })
           );
-          res.status(200).json({ message: "ok", token: findUser.email });
+          res.status(200).json({ message: "ok", token: findUser.id });
         } else {
           res.status(401).json({ message: "incorrect password" });
         }
