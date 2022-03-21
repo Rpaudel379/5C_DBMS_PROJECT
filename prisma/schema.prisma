@@ -22,14 +22,19 @@ datasource db {
 // }
 
 model User {
-  id       String @id @default(cuid())
-  email    String @unique
-  password String
+  id         String      @id @default(cuid())
+  email      String      @unique
+  password   String
+  info       Info?
+  profileImg ProfileImg?
+  address    Address?
+  bio        Bio?
 
 }
 
 model Info {
   id        Int    @id @default(autoincrement())
+  user      User   @relation(fields: [userid], references: [id], onDelete: Cascade)
   userid    String @unique
   firstname String
   lastname  String
@@ -37,12 +42,15 @@ model Info {
 
 model ProfileImg {
   id     Int     @id @default(autoincrement())
+  user   User    @relation(fields: [userid], references: [id], onDelete: Cascade)
   userid String  @unique
   image  String?
 }
 
 model Address {
-  id      Int    @id @default(autoincrement())
+  id   Int  @id @default(autoincrement())
+  user User @relation(fields: [userid], references: [id], onDelete: Cascade)
+
   userid  String @unique
   country String
   state   String
@@ -50,7 +58,9 @@ model Address {
 }
 
 model Bio {
-  id     Int     @id @default(autoincrement())
+  id   Int  @id @default(autoincrement())
+  user User @relation(fields: [userid], references: [id], onDelete: Cascade)
+
   userid String  @unique
   bio    String?
 }

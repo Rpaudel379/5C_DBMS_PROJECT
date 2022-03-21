@@ -3,14 +3,30 @@ import { CalendarIcon, PencilAltIcon } from "@heroicons/react/outline";
 import InputModal from "./InputModal";
 import { useState } from "react";
 import ProjectAvatar from "./ProjectAvatar";
+import { useRouter } from "next/router";
 
 const ProjectDashboard = () => {
+  const router = useRouter();
+
   const { userData } = useGlobalContext();
   const [showModal, setShowModal] = useState(false);
   const [type, setType] = useState();
 
   const handlechange = (e) => {
     setShowModal(true);
+  };
+
+  const handleDelete = async () => {
+    const res = await fetch("api/deleteuser", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (res.status == 200) {
+      router.reload();
+    } else {
+      console.log("error");
+    }
   };
 
   return (
@@ -170,7 +186,10 @@ const ProjectDashboard = () => {
       </div>
 
       <div className="mt-5 ">
-        <button className="rounded-lg bg-red-500 text-white text-sm px-4 py-1 hover:bg-red-400 ">
+        <button
+          className="rounded-lg bg-red-500 text-white text-sm px-4 py-1 hover:bg-red-400 "
+          onClick={handleDelete}
+        >
           delete your account
         </button>
       </div>
